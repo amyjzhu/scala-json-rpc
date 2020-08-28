@@ -10,13 +10,13 @@ publishTo := {
 publishArtifact := false
 
 val commonSettings = Seq(
-  organization := "io.github.shogowada",
+  organization := "com.github.nawforce",
   name := "scala-json-rpc",
   version := "1.0.0",
   scalaVersion := "2.12.9",
   logBuffered in Test := false,
   licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
-  homepage := Some(url("https://github.com/shogowada/scala-json-rpc")),
+  homepage := Some(url("https://github.com/nawforce/scala-json-rpc")),
   publishMavenStyle := true,
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
@@ -50,13 +50,14 @@ lazy val core = (crossProject in file("."))
       libraryDependencies ++= Seq(
         "org.scala-lang" % "scala-reflect" % scalaVersion.value,
 
-        "org.scalatest" %%% "scalatest" % "3.+" % Test,
+        "com.lihaoyi" %%% "upickle" % "1.2.0",
+
+        "org.scalatest" %%% "scalatest" % "3.0.4" % Test,
         "org.scalacheck" %% "scalacheck" % "1.14+" % Test
       ),
       publishArtifact := true
     )
     .dependsOn(jsonSerializer)
-    .dependsOn(upickleJSONSerializer % "test")
 
 lazy val jvm = core.jvm
 lazy val js = core.js
@@ -80,7 +81,7 @@ lazy val upickleJSONSerializer = (crossProject in file("upickle-json-serializer"
       libraryDependencies ++= Seq(
         "org.scala-lang" % "scala-reflect" % scalaVersion.value,
 
-        "com.lihaoyi" %%% "upickle" % "0.4.+"
+        "com.lihaoyi" %%% "upickle" % "1.2.0"
       ),
       publishArtifact := true
     )
@@ -99,7 +100,7 @@ lazy val circeJSONSerializer = (crossProject in file("circe-json-serializer"))
         "io.circe" %%% "circe-parser" % Version.circe,
         "io.circe" %%% "circe-core" % Version.circe,
         "io.circe" %%% "circe-generic" % Version.circe % "test",
-        "org.scalatest" %%% "scalatest" % "3.+" % "test",
+        "org.scalatest" %%% "scalatest" % "3.0.4" % "test",
         "org.scalacheck" %% "scalacheck" % "1.14+" % "test"
       ),
       publishArtifact := true
@@ -127,7 +128,7 @@ lazy val exampleJvmCommonSettings = Seq(
     "org.scalatra" %% "scalatra" % "2.5.+",
 
     "org.seleniumhq.selenium" % "selenium-java" % "[3.4.0,4.0.0[" % "it",
-    "org.scalatest" %% "scalatest" % "3.+" % "it",
+    "org.scalatest" %%% "scalatest" % "3.0.4" % "it",
     "org.scalacheck" %% "scalacheck" % "1.14+" % "it"
   )
 )
