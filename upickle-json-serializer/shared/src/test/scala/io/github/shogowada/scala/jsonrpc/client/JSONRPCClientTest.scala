@@ -3,6 +3,7 @@ package io.github.shogowada.scala.jsonrpc.client
 import io.github.shogowada.scala.jsonrpc.BaseSpec
 import io.github.shogowada.scala.jsonrpc.Types.JSONSender
 import io.github.shogowada.scala.jsonrpc.serializers.UpickleJSONSerializer
+import io.github.shogowada.scala.jsonrpc.serializers.UpickleJSONSerializer._
 
 import scala.concurrent.Future
 

@@ -3,6 +3,7 @@ package io.github.shogowada.scala.jsonrpc
 import io.github.shogowada.scala.jsonrpc.Models.{JSONRPCErrorResponse, JSONRPCErrors, JSONRPCException}
 import io.github.shogowada.scala.jsonrpc.client.JSONRPCClient
 import io.github.shogowada.scala.jsonrpc.serializers.UpickleJSONSerializer
+import io.github.shogowada.scala.jsonrpc.serializers.UpickleJSONSerializer._
 import io.github.shogowada.scala.jsonrpc.server.JSONRPCServer
 
 import scala.concurrent.{ExecutionContext, Future}

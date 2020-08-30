@@ -1,4 +1,5 @@
-crossScalaVersions := Seq("2.12.9")
+
+ThisBuild / scalaVersion := "2.13.3"
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
@@ -13,10 +14,11 @@ val commonSettings = Seq(
   organization := "com.github.nawforce",
   name := "scala-json-rpc",
   version := "1.0.0",
-  scalaVersion := "2.12.9",
+  scalaVersion := "2.13.3",
   logBuffered in Test := false,
   licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
   homepage := Some(url("https://github.com/nawforce/scala-json-rpc")),
+  credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
   publishMavenStyle := true,
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
@@ -27,8 +29,8 @@ val commonSettings = Seq(
   },
   publishArtifact := false,
   pomExtra := <scm>
-    <url>git@github.com:shogowada/scala-json-rpc.git</url>
-    <connection>scm:git:git@github.com:shogowada/scala-json-rpc.git</connection>
+    <url>git@github.com:nawforce/scala-json-rpc.git</url>
+    <connection>scm:git:git@github.com:nawforce/scala-json-rpc.git</connection>
   </scm>
       <developers>
         <developer>
@@ -40,10 +42,10 @@ val commonSettings = Seq(
 )
 
 val Version = new {
-  val circe = "0.11.0"
+  val circe = "0.13.0"
 }
 
-lazy val core = (crossProject in file("."))
+lazy val core = crossProject(JSPlatform, JVMPlatform).in(file("."))
     .disablePlugins(AssemblyPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -52,28 +54,15 @@ lazy val core = (crossProject in file("."))
 
         "com.lihaoyi" %%% "upickle" % "1.2.0",
 
-        "org.scalatest" %%% "scalatest" % "3.0.4" % Test,
+        "org.scalatest" %%% "scalatest" % "3.2.0" % Test,
+        "org.scalatest" %%% "scalatest-freespec" % "3.2.0" % Test,
+        "org.scalatest" %%% "scalatest-shouldmatchers" % "3.2.0" % Test,
         "org.scalacheck" %% "scalacheck" % "1.14+" % Test
       ),
       publishArtifact := true
     )
-    .dependsOn(jsonSerializer)
 
-lazy val jvm = core.jvm
-lazy val js = core.js
-
-lazy val jsonSerializer = (crossProject in file("json-serializer"))
-    .disablePlugins(AssemblyPlugin)
-    .settings(commonSettings: _*)
-    .settings(
-      name += "-json-serializer",
-      publishArtifact := true
-    )
-
-lazy val jsonSerializerJvm = jsonSerializer.jvm
-lazy val jsonSerializerJs = jsonSerializer.js
-
-lazy val upickleJSONSerializer = (crossProject in file("upickle-json-serializer"))
+lazy val upickleJSONSerializer = crossProject(JSPlatform, JVMPlatform).in(file("upickle-json-serializer"))
     .disablePlugins(AssemblyPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -81,16 +70,16 @@ lazy val upickleJSONSerializer = (crossProject in file("upickle-json-serializer"
       libraryDependencies ++= Seq(
         "org.scala-lang" % "scala-reflect" % scalaVersion.value,
 
-        "com.lihaoyi" %%% "upickle" % "1.2.0"
+        "com.lihaoyi" %%% "upickle" % "1.2.0",
+        "org.scalatest" %%% "scalatest" % "3.2.0" % Test,
+        "org.scalatest" %%% "scalatest-freespec" % "3.2.0" % Test,
+        "org.scalatest" %%% "scalatest-shouldmatchers" % "3.2.0" % Test,
       ),
       publishArtifact := true
     )
-    .dependsOn(jsonSerializer)
+    .dependsOn(core)
 
-lazy val upickleJSONSerializerJvm = upickleJSONSerializer.jvm
-lazy val upickleJSONSerializerJs = upickleJSONSerializer.js
-
-lazy val circeJSONSerializer = (crossProject in file("circe-json-serializer"))
+lazy val circeJSONSerializer = crossProject(JSPlatform, JVMPlatform).in(file("circe-json-serializer"))
     .disablePlugins(AssemblyPlugin)
     .settings(commonSettings: _*)
     .settings(
@@ -100,17 +89,17 @@ lazy val circeJSONSerializer = (crossProject in file("circe-json-serializer"))
         "io.circe" %%% "circe-parser" % Version.circe,
         "io.circe" %%% "circe-core" % Version.circe,
         "io.circe" %%% "circe-generic" % Version.circe % "test",
-        "org.scalatest" %%% "scalatest" % "3.0.4" % "test",
+        "org.scalatest" %%% "scalatest" % "3.2.0" % "test",
+        "org.scalatest" %%% "scalatest-freespec" % "3.2.0" % Test,
+        "org.scalatest" %%% "scalatest-shouldmatchers" % "3.2.0" % Test,
         "org.scalacheck" %% "scalacheck" % "1.14+" % "test"
       ),
       publishArtifact := true
     )
-    .dependsOn(core, jsonSerializer)
-
-lazy val circeJSONSerializerJvm = circeJSONSerializer.jvm
-lazy val circeJSONSerializerJs = circeJSONSerializer.js
+    .dependsOn(core)
 
 // Examples
+/* Disable examples for now while upgrading core
 
 lazy val JettyVersion = "9.+"
 
@@ -120,7 +109,7 @@ lazy val exampleCommonSettings = Seq(
 )
 
 lazy val exampleJvmCommonSettings = Seq(
-  pipelineStages in Assets := Seq(scalaJSDev),
+  //pipelineStages in Assets := Seq(scalaJSDev),
   WebKeys.packagePrefix in Assets := "public/",
   managedClasspath in Runtime += (packageBin in Assets).value,
   libraryDependencies ++= Seq(
@@ -128,7 +117,7 @@ lazy val exampleJvmCommonSettings = Seq(
     "org.scalatra" %% "scalatra" % "2.5.+",
 
     "org.seleniumhq.selenium" % "selenium-java" % "[3.4.0,4.0.0[" % "it",
-    "org.scalatest" %%% "scalatest" % "3.0.4" % "it",
+    "org.scalatest" %%% "scalatest" % "3.2.0" % "it",
     "org.scalacheck" %% "scalacheck" % "1.14+" % "it"
   )
 )
@@ -142,7 +131,7 @@ lazy val exampleJsCommonSettings = Seq(
 
 // HTTP example
 
-lazy val exampleE2e = (crossProject in file("examples/e2e"))
+lazy val exampleE2e = crossProject(JSPlatform, JVMPlatform).in(file("examples/e2e"))
     .settings(commonSettings: _*)
     .settings(exampleCommonSettings: _*)
     .settings(
@@ -165,7 +154,7 @@ lazy val exampleE2eJvm = exampleE2e.jvm
         s"-DjarLocation=${assembly.value}"
       )
     )
-    .dependsOn(exampleTestUtils % "it")
+    .dependsOn(exampleTestUtils.jvm % "it")
 
 lazy val exampleE2eJs = exampleE2e.js
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -177,7 +166,7 @@ lazy val exampleE2eJs = exampleE2e.js
 
 // WebSocket example
 
-lazy val exampleE2eWebSocket = (crossProject in file("examples/e2e-web-socket"))
+lazy val exampleE2eWebSocket = crossProject(JSPlatform, JVMPlatform).in(file("examples/e2e-web-socket"))
     .settings(commonSettings: _*)
     .settings(exampleCommonSettings: _*)
     .settings(
@@ -204,7 +193,7 @@ lazy val exampleE2eWebSocketJvm = exampleE2eWebSocket.jvm
         s"-DjarLocation=${assembly.value}"
       )
     )
-    .dependsOn(exampleTestUtils % "it")
+    .dependsOn(exampleTestUtils.jvm % "it")
 
 lazy val exampleE2eWebSocketJs = exampleE2eWebSocket.js
     .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
@@ -216,7 +205,7 @@ lazy val exampleE2eWebSocketJs = exampleE2eWebSocket.js
 
 // Test Utils
 
-lazy val exampleTestUtils = (project in file("examples/test-utils"))
+lazy val exampleTestUtils = crossProject(JSPlatform, JVMPlatform).in(file("examples/test-utils"))
     .disablePlugins(AssemblyPlugin)
     .settings(commonSettings: _*)
     .settings(exampleCommonSettings: _*)
@@ -226,3 +215,4 @@ lazy val exampleTestUtils = (project in file("examples/test-utils"))
         "org.apache.httpcomponents" % "httpclient" % "4.+"
       )
     )
+*/

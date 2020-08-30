@@ -1,9 +1,11 @@
 package io.github.shogowada.scala.jsonrpc.serializers
 
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec._
+import org.scalatest.matchers.should._
 import io.circe.generic.auto._
 
-class CirceJSONSerializerTest extends FreeSpec
+class CirceJSONSerializerTest extends AnyFreeSpec
     with OneInstancePerTest
     with Matchers {
   override def newInstance = new CirceJSONSerializerTest
