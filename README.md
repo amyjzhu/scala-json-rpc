@@ -1,10 +1,17 @@
 # scala-json-rpc
 
-master: [![Master Build Status](https://travis-ci.org/shogowada/scala-json-rpc.svg?branch=master)](https://travis-ci.org/shogowada/scala-json-rpc)
+master: [![Master Build Status](https://travis-ci.org/nawforce/scala-json-rpc.svg?branch=master)](https://travis-ci.org/nawforce/scala-json-rpc)
+
+## Fork
+
+This is a fork of [scala-json-rpc](https://github.com/shogowada/scala-json-rpc) updated to support Scala 2.13.3 and
+Scala.js 1.1.1.
+
+## scala-json-rpc
 
 Let your servers and clients communicate over function calls!
 
-scala-json-rpc is a Remote Procedure Call (RPC) library honorring [JSON-RPC 2.0 spec](http://www.jsonrpc.org).
+scala-json-rpc is a Remote Procedure Call (RPC) library honoring [JSON-RPC 2.0 spec](http://www.jsonrpc.org).
 
 JSON-RPC defines a specification of RPC in JSON format. This means that you can achieve RPC between your components as long as they are capable of
 
@@ -108,8 +115,8 @@ def onResponseJSONReceived(responseJSON: String): Unit = {
 
 |Platform|SBT|Scala Version|Scala JS Version|
 |---|---|---|---|
-|JVM|```"io.github.shogowada" %% "scala-json-rpc" % "1.0.0"```|2.12||
-|JS|```"io.github.shogowada" %%% "scala-json-rpc" % "1.0.0"```|2.12|0.6.28+|
+|JVM|```"io.github.nawforce" %% "scala-json-rpc" % "1.0.0"```|2.13||
+|JS|```"io.github.nawforce" %%% "scala-json-rpc" % "1.0.0"```|2.13|1.0+|
 
 scala-json-rpc has **no external dependency**, so it should fit into any of your Scala JVM & JS applications.
 
@@ -122,7 +129,7 @@ scala-json-rpc has **no external dependency**, so it should fit into any of your
 ## Examples
 
 - [Unidirectional JSON-RPC from Scala JS to Scala JVM over HTTP](/examples/e2e)
-- [Bidirectional JSON-RPC between Scals JS and Scala JVM over WebSocket](/examples/e2e-web-socket)
+- [Bidirectional JSON-RPC between Scala JS and Scala JVM over WebSocket](/examples/e2e-web-socket)
 
 ## TODOs
 
