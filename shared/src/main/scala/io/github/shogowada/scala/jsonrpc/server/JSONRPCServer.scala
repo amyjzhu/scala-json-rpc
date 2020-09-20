@@ -109,7 +109,7 @@ object JSONRPCServerMacro {
       q"""
           $jsonSerializer.deserialize[JSONRPCMethod]($json)
               .toRight($maybeParseErrorJSON)
-              .right.flatMap(method => {
+              .flatMap(method => {
                 if(method.jsonrpc != Constants.JSONRPC) {
                   Left($maybeInvalidRequestErrorJSON)
                 } else {
@@ -122,7 +122,7 @@ object JSONRPCServerMacro {
     val maybeErrorJSONOrHandler = c.Expr[Either[Option[String], RequestJSONHandler]](
       q"""
           $maybeErrorJSONOrMethodName
-              .right.flatMap((methodName: String) => {
+              .flatMap((methodName: String) => {
                 $requestJSONHandlerRepository.get(methodName)
                   .toRight($maybeMethodNotFoundErrorJSON)
               })
