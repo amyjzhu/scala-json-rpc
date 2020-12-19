@@ -4,8 +4,10 @@ master: [![Master Build Status](https://travis-ci.org/nawforce/scala-json-rpc.sv
 
 ## Fork
 
-This is a fork of [scala-json-rpc](https://github.com/shogowada/scala-json-rpc) updated to support Scala 2.13.3 and
-Scala.js 1.1.1.
+This is a fork of [nawforce's update to the scala-json-rpc library](https://github.com/nawforce/scala-json-rpc) because I needed Scala 2.12 for a specific project.
+
+Scala 2.12.12 and Scala.js 1.1.1.
+Original [scala-json-rpc](https://github.com/shogowada/scala-json-rpc).
 
 ## scala-json-rpc
 
@@ -115,8 +117,8 @@ def onResponseJSONReceived(responseJSON: String): Unit = {
 
 |Platform|SBT|Scala Version|Scala JS Version|
 |---|---|---|---|
-|JVM|```"io.github.nawforce" %% "scala-json-rpc" % "1.0.0"```|2.13||
-|JS|```"io.github.nawforce" %%% "scala-json-rpc" % "1.0.0"```|2.13|1.0+|
+|JVM|```"com.github.amyjzhu" %% "scala-json-rpc" % "1.0.0"```|2.12||
+|JS|```"com.github.amyjzhu" %%% "scala-json-rpc" % "1.0.0"```|2.12|1.0+|
 
 scala-json-rpc has **no external dependency**, so it should fit into any of your Scala JVM & JS applications.
 
