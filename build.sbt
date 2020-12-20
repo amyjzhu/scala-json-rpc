@@ -1,44 +1,16 @@
+ThisBuild / scalaVersion := "2.12.12"
+ThisBuild / version := "1.0.1"
+ThisBuild / organization := "org.mimic"
 
-ThisBuild / scalaVersion := "2.13.3"
+name := "scala-json-rpc"
 
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  isSnapshot.value match {
-    case true => Some("snapshots" at nexus + "content/repositories/snapshots")
-    case false => Some("releases" at nexus + "service/local/staging/deploy/maven2")
-  }
-}
-publishArtifact := false
+//publishTo := Some(Resolver.file("local-ivy", file("path/to/ivy-repo/releases")))
 
 val commonSettings = Seq(
-  organization := "com.github.nawforce",
+  organization := "org.mimic",
   name := "scala-json-rpc",
   version := "1.0.1",
-  scalaVersion := "2.13.3",
-  logBuffered in Test := false,
-  licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT")),
-  homepage := Some(url("https://github.com/nawforce/scala-json-rpc")),
-  credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials"),
-  publishMavenStyle := true,
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    isSnapshot.value match {
-      case true => Some("snapshots" at nexus + "content/repositories/snapshots")
-      case false => Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    }
-  },
-  publishArtifact := false,
-  pomExtra := <scm>
-    <url>git@github.com:nawforce/scala-json-rpc.git</url>
-    <connection>scm:git:git@github.com:nawforce/scala-json-rpc.git</connection>
-  </scm>
-      <developers>
-        <developer>
-          <id>shogowada</id>
-          <name>Shogo Wada</name>
-          <url>https://github.com/shogowada</url>
-        </developer>
-      </developers>
+  scalaVersion := "2.12.12",
 )
 
 val Version = new {
