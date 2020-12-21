@@ -118,8 +118,8 @@ Not available online -- please publish locally.
 
 |Platform|SBT|Scala Version|Scala JS Version|
 |---|---|---|---|
-|JVM|```"com.github.amyjzhu" %% "scala-json-rpc" % "1.0.0"```|2.12||
-|JS|```"com.github.amyjzhu" %%% "scala-json-rpc" % "1.0.0"```|2.12|1.0+|
+|JVM|```"org.mimic" %% "scala-json-rpc" % "1.0.1"```|2.12||
+|JS|```"org.mimic" %%% "scala-json-rpc" % "1.0.1"```|2.12|1.0+|
 
 scala-json-rpc has **no external dependency**, so it should fit into any of your Scala JVM & JS applications.
 
