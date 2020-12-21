@@ -114,6 +114,7 @@ def onResponseJSONReceived(responseJSON: String): Unit = {
 ```
 
 ## Dependency
+Not available online -- please publish locally.
 
 |Platform|SBT|Scala Version|Scala JS Version|
 |---|---|---|---|
